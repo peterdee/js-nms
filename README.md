@@ -29,6 +29,10 @@ const pointsArray = [
   new Point(266, 432, 50),
   new Point(280, 450, 52),
 ];
+
+const radius = 10;
+
+nmsr(radius, pointsArray);
 ```
 
 The goal here is to group all of the points based on the radius value. Overlapping points are grouped in the same cluster, and then the one with hightest intensity is selected.
