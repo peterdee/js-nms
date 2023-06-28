@@ -1,0 +1,19 @@
+{
+  "name": "js-nms",
+  "version": "1.0.0",
+  "description": "Non Maximum Suppression with Javascript",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "node ./index.js"
+  },
+  "author": {
+    "name": "Peter Dyumin",
+    "url": "https://github.com/peterdee"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/peterdee/js-nms"
+  },
+  "license": "MIT"
+}
