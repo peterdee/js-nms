@@ -41,6 +41,8 @@ const pointsArray = [
   new Point(308, 23, 42),
   new Point(421, 243, 46),
   new Point(266, 432, 50),
+  new Point(269, 426, 55),
+  new Point(277, 419, 95),
   new Point(280, 450, 52),
 ];
 
