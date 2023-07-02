@@ -11,6 +11,9 @@
     "name": "Peter Dyumin",
     "url": "https://github.com/peterdee"
   },
+  "engines": {
+    "node": ">=10.5.0"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/peterdee/js-nms"

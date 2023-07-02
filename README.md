@@ -6,9 +6,9 @@ This is an example of NMS implementation with Javascript using recursion.
 
 ```javascript
 class Point {
-  intensity = 0;
-  x = 0;
-  y = 0;
+  intensity;
+  x;
+  y;
   constructor(x = 0, y = 0, intensity = 0) {
     this.intensity = intensity;
     this.x = x;
@@ -22,65 +22,57 @@ const pointsArray = [
   new Point(302, 15, 27),
   new Point(305, 17, 64),
   new Point(418, 236, 43),
-  new Point(306, 20, 96), 
+  new Point(306, 29, 92), 
   new Point(307, 20, 96),
   new Point(308, 23, 42),
+  new Point(308, 24, 20),
   new Point(421, 243, 46),
   new Point(266, 432, 50),
+  new Point(269, 426, 55),
+  new Point(277, 419, 95),
   new Point(280, 450, 52),
 ];
 
-const radius = 10;
+const radius = 5;
 
-nmsr(radius, pointsArray);
+console.log(nms(pointsArray, radius));
 ```
 
-The goal here is to group all of the points based on the radius value. Overlapping points are grouped in the same cluster, and then the one with hightest intensity is selected.
+The goal here is to group all of the points based on the radius value. Overlapping points are grouped in the same cluster, and then the point with hightest intensity is selected from each cluster.
 
 ### Output
 
 ```text
-// radius = 0
+// radius = 5
 [
-  Point { intensity: 26, x: 265, y: 431 },
+  Point { intensity: 50, x: 266, y: 432 },
+  Point { intensity: 55, x: 269, y: 426 },
+  Point { intensity: 95, x: 277, y: 419 },
+  Point { intensity: 52, x: 280, y: 450 },
   Point { intensity: 51, x: 285, y: 243 },
-  Point { intensity: 27, x: 302, y: 15 },
   Point { intensity: 64, x: 305, y: 17 },
-  Point { intensity: 43, x: 418, y: 236 },
-  Point { intensity: 96, x: 306, y: 20 },
+  Point { intensity: 92, x: 306, y: 29 },
   Point { intensity: 96, x: 307, y: 20 },
-  Point { intensity: 42, x: 308, y: 23 },
-  Point { intensity: 46, x: 421, y: 243 },
-  Point { intensity: 50, x: 266, y: 432 },
-  Point { intensity: 52, x: 280, y: 450 }
-]
-
-// radius = 2
-[
-  Point { intensity: 50, x: 266, y: 432 },
-  Point { intensity: 51, x: 285, y: 243 },
-  Point { intensity: 27, x: 302, y: 15 },
-  Point { intensity: 64, x: 305, y: 17 },
   Point { intensity: 43, x: 418, y: 236 },
-  Point { intensity: 96, x: 306, y: 20 },
-  Point { intensity: 42, x: 308, y: 23 },
-  Point { intensity: 46, x: 421, y: 243 },
-  Point { intensity: 52, x: 280, y: 450 }
+  Point { intensity: 46, x: 421, y: 243 }
 ]
 
 // radius = 10
 [
-  Point { intensity: 50, x: 266, y: 432 },
+  Point { intensity: 95, x: 277, y: 419 },
+  Point { intensity: 52, x: 280, y: 450 },
   Point { intensity: 51, x: 285, y: 243 },
-  Point { intensity: 96, x: 306, y: 20 },
-  Point { intensity: 46, x: 421, y: 243 },
-  Point { intensity: 52, x: 280, y: 450 }
+  Point { intensity: 64, x: 305, y: 17 },
+  Point { intensity: 96, x: 307, y: 20 },
+  Point { intensity: 46, x: 421, y: 243 }
 ]
 
-// radius = 200
+// radius = 50
 [
-  Point { intensity: 52, x: 280, y: 450 },
-  Point { intensity: 96, x: 306, y: 20 }
+  Point { intensity: 95, x: 277, y: 419 },
+  Point { intensity: 51, x: 285, y: 243 },
+  Point { intensity: 96, x: 307, y: 20 },
+  Point { intensity: 46, x: 421, y: 243 }
 ]
 ```
 
