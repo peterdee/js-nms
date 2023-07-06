@@ -5,6 +5,7 @@
   "private": true,
   "type": "module",
   "scripts": {
+    "lint": "eslint",
     "start": "node ./index.js"
   },
   "author": {
@@ -18,5 +19,10 @@
     "type": "git",
     "url": "git+https://github.com/peterdee/js-nms"
   },
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "eslint": "^8.44.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-plugin-import": "^2.27.5"
+  }
 }
