@@ -12,22 +12,14 @@ const pointsArray = [
   new Point(308, 24, 20),
   new Point(421, 243, 46),
   new Point(266, 432, 50),
+  new Point(158, 290, 99),
   new Point(269, 426, 55),
   new Point(277, 419, 95),
   new Point(280, 450, 52),
 ];
 
-// const edgeCase = [
-//   new Point(111, 122, 45),
-//   new Point(100, 100, 22),
-//   new Point(101, 103, 90),
-//   new Point(103, 97, 93),
-//   new Point(105, 100, 50),
-//   new Point(105, 107, 55),
-// ];
-
 /**
- * Combine clusters if necessary
+ * Combine clusters if possible
  * @param {Point[]} cluster - current cluster
  * @param {Point[][]} clusters - array of clusters
  * @param {number} radius - point radius
@@ -87,7 +79,6 @@ function nms(
     );
   }
   if (array.length === 0) {
-    console.log(combineClusters(cluster, clusters, radius));
     return combineClusters(cluster, clusters, radius).map(
       (element) => element.sort((a, b) => b.intensity - a.intensity)[0],
     );
@@ -123,5 +114,5 @@ function nms(
 }
 
 console.time('nms');
-console.log(nms(pointsArray, 15));
+console.log(nms(pointsArray, 10));
 console.timeEnd('nms');
