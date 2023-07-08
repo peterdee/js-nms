@@ -68,7 +68,7 @@ function nms(
   clusters = [],
   isSorted = false,
 ) {
-  if (!isSorted) {
+  if (!isSorted && array.length > 0) {
     return nms(
       array.sort((a, b) => a.x - b.x || a.y - b.y),
       radius,
