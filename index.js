@@ -1,4 +1,5 @@
 import Point from './point.js';
+import { set2 } from './datasets.js';
 
 const pointsArray = [
   new Point(265, 431, 26),
@@ -25,15 +26,21 @@ const pointsArray = [
  * @param {number} radius - point radius
  * @returns {Point[][]}
  */
-function combineClusters(cluster = [], clusters = [], radius = 10) {
+function combineClusters(
+  cluster = [],
+  clusters = [],
+  radius = 10,
+  primary = 'x',
+  secondary = 'y'
+) {
   const [lastCluster = []] = clusters.slice(-1);
   let combine = false;
   for (let i = 0; i < lastCluster.length; i += 1) {
     const lastClusterPoint = lastCluster[i];
     for (let j = 0; j < cluster.length; j += 1) {
       const currentClusterPoint = cluster[j];
-      if ((currentClusterPoint.x - lastClusterPoint.x) < radius
-        && Math.abs(currentClusterPoint.y - lastClusterPoint.y) < radius) {
+      if ((currentClusterPoint[primary] - lastClusterPoint[primary]) < radius
+        && Math.abs(currentClusterPoint[secondary] - lastClusterPoint[secondary]) < radius) {
         combine = true;
         break;
       }
@@ -46,7 +53,9 @@ function combineClusters(cluster = [], clusters = [], radius = 10) {
     ? [...clusters, cluster]
     : [
       ...clusters.slice(0, clusters.length - 2),
-      [...lastCluster, ...cluster].sort((a, b) => a.x - b.x || a.y - b.y),
+      [...lastCluster, ...cluster].sort(
+        (a, b) => a[primary] - b[primary] || a[secondary] - b[secondary],
+      ),
     ];
 }
 
@@ -67,30 +76,34 @@ function nms(
   cluster = [],
   clusters = [],
   isSorted = false,
+  primarySortField = 'x',
 ) {
+  const primary = primarySortField === 'x' ? 'x' : 'y';
+  const secondary = primarySortField !== 'x' ? 'x' : 'y';
   if (!isSorted && array.length > 0) {
     return nms(
-      array.sort((a, b) => a.x - b.x || a.y - b.y),
+      array.sort((a, b) => a[primary] - b[primary] || a[secondary] - b[secondary]),
       radius,
       previous,
       cluster,
       clusters,
       true,
+      primarySortField,
     );
   }
   if (array.length === 0) {
-    return combineClusters(cluster, clusters, radius).map(
+    return combineClusters(cluster, clusters, radius, primary, secondary).map(
       (element) => element.sort((a, b) => b.intensity - a.intensity)[0],
     );
   }
   const [current, ...rest] = array;
   if (previous === null) {
-    return nms(rest, radius, current, [current], clusters, true);
+    return nms(rest, radius, current, [current], clusters, true, primarySortField);
   }
-  if ((current.x - previous.x) < radius
-    && Math.abs(current.y - previous.y) < radius) {
+  if ((current[primary] - previous[primary]) < radius
+    && Math.abs(current[secondary] - previous[secondary]) < radius) {
     cluster.push(current);
-    return nms(rest, radius, current, cluster, clusters, true);
+    return nms(rest, radius, current, cluster, clusters, true, primarySortField);
   }
   if (clusters.length > 0) {
     return nms(
@@ -98,8 +111,9 @@ function nms(
       radius,
       current,
       [current],
-      combineClusters(cluster, clusters, radius),
+      combineClusters(cluster, clusters, radius, primary, secondary),
       true,
+      primarySortField,
     );
   }
   clusters.push(cluster);
@@ -110,9 +124,29 @@ function nms(
     [current],
     clusters,
     true,
+    primarySortField,
   );
 }
 
 console.time('nms');
-console.log(nms(pointsArray, 10));
+const radius = 15;
+const result = nms(
+  nms(
+    set2,
+    radius,
+    null,
+    [],
+    [],
+    false,
+    'x',
+  ),
+  radius,
+  null,
+  [],
+  [],
+  false,
+  'y',
+);
+
+console.log(result, result.length, set2.length);
 console.timeEnd('nms');
