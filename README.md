@@ -55,7 +55,6 @@ The goal here is to create clusters of points based on the radius value. Overlap
   Point { intensity: 95, x: 277, y: 419 },
   Point { intensity: 52, x: 280, y: 450 },
   Point { intensity: 51, x: 285, y: 243 },
-  Point { intensity: 64, x: 305, y: 17 },
   Point { intensity: 92, x: 306, y: 29 },
   Point { intensity: 96, x: 307, y: 20 },
   Point { intensity: 43, x: 418, y: 236 },
@@ -64,21 +63,21 @@ The goal here is to create clusters of points based on the radius value. Overlap
 
 // radius = 15
 [
+  Point { intensity: 96, x: 307, y: 20 },
+  Point { intensity: 51, x: 285, y: 243 },
+  Point { intensity: 46, x: 421, y: 243 },
   Point { intensity: 99, x: 158, y: 290 },
   Point { intensity: 95, x: 277, y: 419 },
-  Point { intensity: 52, x: 280, y: 450 },
-  Point { intensity: 51, x: 285, y: 243 },
-  Point { intensity: 96, x: 307, y: 20 },
-  Point { intensity: 46, x: 421, y: 243 }
+  Point { intensity: 52, x: 280, y: 450 }
 ]
 
 // radius = 50
 [
-  Point { intensity: 99, x: 158, y: 290 },
-  Point { intensity: 95, x: 277, y: 419 },
-  Point { intensity: 51, x: 285, y: 243 },
   Point { intensity: 96, x: 307, y: 20 },
-  Point { intensity: 46, x: 421, y: 243 }
+  Point { intensity: 51, x: 285, y: 243 },
+  Point { intensity: 46, x: 421, y: 243 },
+  Point { intensity: 99, x: 158, y: 290 },
+  Point { intensity: 95, x: 277, y: 419 }
 ]
 ```
 
@@ -90,9 +89,9 @@ The `combineClusters()` function is required to handle an edge case where two cl
 
 If `combineClusters()` is omitted, there's no guarantee that local maximum points from different clusters will have a `radius` distance between them.
 
-As a result, current implementation is probably not the quickiest one.
+It is still possible to have several points with overlapping radius, this is because selected points were located at the edge of the cluster and had the maximum intensity value.
 
-A proper test with a corner detector is also required.
+As a result, current implementation is probably not the quickiest one.
 
 ### License
 

@@ -1,5 +1,5 @@
 import Point from './point.js';
-import { set2 } from './datasets.js';
+import { set1 } from './datasets.js';
 
 const pointsArray = [
   new Point(265, 431, 26),
@@ -128,25 +128,47 @@ function nms(
   );
 }
 
-console.time('nms');
-const radius = 15;
-const result = nms(
-  nms(
-    set2,
+/**
+ * Apply NMS recursively until array length stops changing
+ * @param {Point[]} array - array of points
+ * @param {number} radius - point radius
+ * @param {number | null} prevLength - length of array on a previous iteration
+ * @returns 
+ */
+function nmsRecursion(
+	array = [],
+	radius = 10,
+	prevLength = null,
+) {
+  const clusteredX = nms(
+    array,
     radius,
     null,
     [],
     [],
     false,
     'x',
-  ),
-  radius,
-  null,
-  [],
-  [],
-  false,
-  'y',
-);
+  );
+  if (prevLength && clusteredX.length === prevLength) {
+    return clusteredX
+  }
+  const clusteredY = nms(
+    clusteredX,
+    radius,
+    null,
+    [],
+    [],
+    false,
+    'y',
+  );
+	if (clusteredX.length === clusteredY.length) {
+		return clusteredY
+	}
+	return nmsRecursion(clusteredY, radius, clusteredY.length)
+}
 
-console.log(result, result.length, set2.length);
+console.time('nms');
+const radius = 50;
+const result = nmsRecursion(pointsArray, radius, null);
+console.log(result, result.length);
 console.timeEnd('nms');
