@@ -1,24 +1,6 @@
 import Point from './point.js';
 import { set1 } from './datasets.js';
 
-const pointsArray = [
-  new Point(265, 431, 26),
-  new Point(285, 243, 51),
-  new Point(302, 15, 27),
-  new Point(305, 17, 64),
-  new Point(418, 236, 43),
-  new Point(306, 29, 92),
-  new Point(307, 20, 96),
-  new Point(308, 23, 42),
-  new Point(308, 24, 20),
-  new Point(421, 243, 46),
-  new Point(266, 432, 50),
-  new Point(158, 290, 99),
-  new Point(269, 426, 55),
-  new Point(277, 419, 95),
-  new Point(280, 450, 52),
-];
-
 /**
  * Combine clusters if possible
  * @param {Point[]} cluster - current cluster
@@ -31,7 +13,7 @@ function combineClusters(
   clusters = [],
   radius = 10,
   primary = 'x',
-  secondary = 'y'
+  secondary = 'y',
 ) {
   const [lastCluster = []] = clusters.slice(-1);
   let combine = false;
@@ -133,12 +115,12 @@ function nms(
  * @param {Point[]} array - array of points
  * @param {number} radius - point radius
  * @param {number | null} prevLength - length of array on a previous iteration
- * @returns 
+ * @returns {Point[]}
  */
 function nmsRecursion(
-	array = [],
-	radius = 10,
-	prevLength = null,
+  array = [],
+  radius = 10,
+  prevLength = null,
 ) {
   const clusteredX = nms(
     array,
@@ -150,7 +132,7 @@ function nmsRecursion(
     'x',
   );
   if (prevLength && clusteredX.length === prevLength) {
-    return clusteredX
+    return clusteredX;
   }
   const clusteredY = nms(
     clusteredX,
@@ -161,14 +143,14 @@ function nmsRecursion(
     false,
     'y',
   );
-	if (clusteredX.length === clusteredY.length) {
-		return clusteredY
-	}
-	return nmsRecursion(clusteredY, radius, clusteredY.length)
+  if (clusteredX.length === clusteredY.length) {
+    return clusteredY;
+  }
+  return nmsRecursion(clusteredY, radius, clusteredY.length);
 }
 
 console.time('nms');
 const radius = 50;
-const result = nmsRecursion(pointsArray, radius, null);
+const result = nmsRecursion(set1, radius, null);
 console.log(result, result.length);
 console.timeEnd('nms');
