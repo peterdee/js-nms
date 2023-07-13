@@ -2,6 +2,10 @@
 
 An example of Non Maximum Suppression with Javascript (using recursion).
 
+### Golang implementation
+
+This code is also available in Golang: https://github.com/peterdee/go-fast/blob/release/nms.go
+
 ### Input
 
 ```javascript

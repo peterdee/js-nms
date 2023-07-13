@@ -1,3 +1,4 @@
+// eslint-disable-next-line
 import Point from './point.js';
 import { set1 } from './datasets.js';
 
@@ -150,7 +151,7 @@ function nmsRecursion(
 }
 
 console.time('nms');
-const radius = 50;
+const radius = 15;
 const result = nmsRecursion(set1, radius, null);
-console.log(result, result.length);
 console.timeEnd('nms');
+console.log(result, result.length);
