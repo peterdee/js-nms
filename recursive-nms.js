@@ -7,6 +7,8 @@ import { set1 } from './datasets.js';
  * @param {Point[]} cluster - current cluster
  * @param {Point[][]} clusters - array of clusters
  * @param {number} radius - point radius
+ * @param {string} primary - primary sort field
+ * @param {string} secondary - secondary sort field
  * @returns {Point[][]}
  */
 function combineClusters(
@@ -50,6 +52,7 @@ function combineClusters(
  * @param {Point[]} cluster - current point cluster
  * @param {Point[][]} clusters - array of clusters
  * @param {boolean} isSorted - indicates if passed array is sorted
+ * @param {string} primarySortField - primary sort field
  * @returns {Point[]}
  */
 function nms(
@@ -112,13 +115,13 @@ function nms(
 }
 
 /**
- * Apply NMS recursively until array length stops changing
+ * Recursive NMS variant that could be used when working with static entities
  * @param {Point[]} array - array of points
  * @param {number} radius - point radius
  * @param {number | null} prevLength - length of array on a previous iteration
  * @returns {Point[]}
  */
-function nmsRecursion(
+function recursiveNMS(
   array = [],
   radius = 10,
   prevLength = null,
@@ -147,11 +150,5 @@ function nmsRecursion(
   if (clusteredX.length === clusteredY.length) {
     return clusteredY;
   }
-  return nmsRecursion(clusteredY, radius, clusteredY.length);
+  return recursiveNMS(clusteredY, radius, clusteredY.length);
 }
-
-console.time('nms');
-const radius = 15;
-const result = nmsRecursion(set1, radius, null);
-console.timeEnd('nms');
-console.log(result, result.length);

@@ -4,10 +4,6 @@
   "description": "Non Maximum Suppression with Javascript",
   "private": true,
   "type": "module",
-  "scripts": {
-    "lint": "eslint",
-    "start": "node ./index.js"
-  },
   "author": {
     "name": "Peter Dyumin",
     "url": "https://github.com/peterdee"
